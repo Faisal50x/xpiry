@@ -1,16 +1,16 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "faisal50x/xpiry",
+    "description": "A simple tool can make your expire validation esier and faster",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "faisal50x",
+        "xpiry"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/faisal50x/xpiry",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Faisal Ahmed",
+            "email": "foysal20x@gmail.com",
             "homepage": "https://spatie.be",
             "role": "Developer"
         }
@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Faisal50x\\Xpiry\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Faisal50x\\Xpiry\\Tests\\": "tests"
         }
     },
     "scripts": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Faisal50x\Xpiry\Tests;
 
 use PHPUnit\Framework\TestCase;
 
