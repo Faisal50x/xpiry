@@ -5,7 +5,6 @@ namespace Faisal50x\Xpiry;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Faisal50x\Xpiry\Contracts\XpiryInterface;
-use phpDocumentor\Reflection\Types\Self_;
 
 final class Xpiry implements XpiryInterface
 {
@@ -105,7 +104,7 @@ final class Xpiry implements XpiryInterface
         if (is_null(self::$startOf) && is_null(self::$endOf)) {
             return self::$startAt->add(self::$periodicTime);
         }
-        if (!is_null(self::$startOf) && is_null(self::$endOf)) {
+        if (! is_null(self::$startOf) && is_null(self::$endOf)) {
             return self::$startAt
                 ->startOf(self::$startOf['unit'], ...self::$startOf['params'])
                 ->add(self::$periodicTime)
@@ -118,7 +117,7 @@ final class Xpiry implements XpiryInterface
     private static function caseUnit(string $unit)
     {
         switch ($unit) {
-            case 'month': case 'week';
+            case 'month': case 'week':
                 return '1 day';
             case 'day':
                 return '1 hour';
@@ -129,7 +128,6 @@ final class Xpiry implements XpiryInterface
             default:
                 return '';
         }
-
     }
 
     public function __toString():string
