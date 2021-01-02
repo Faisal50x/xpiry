@@ -118,7 +118,7 @@ final class Xpiry implements XpiryInterface
         }
 
         if (!is_null(self::$endOf) && is_null(self::$startOf)){
-            return self::$startAt->startOf(self::$endOf['unit'])
+            return self::$startAt
                 ->endOf(self::$endOf['unit'])
                 ->add(self::$periodicTime);
         }
