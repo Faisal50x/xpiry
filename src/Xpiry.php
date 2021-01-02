@@ -5,6 +5,7 @@ namespace Faisal50x\Xpiry;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Faisal50x\Xpiry\Contracts\XpiryInterface;
+use phpDocumentor\Reflection\Types\Self_;
 
 final class Xpiry implements XpiryInterface
 {
@@ -16,9 +17,14 @@ final class Xpiry implements XpiryInterface
     private static Carbon $startAt;
 
     /**
-     * @var Carbon|null
+     * @var array|null
      */
-    private static ?Carbon $startOf = null;
+    private static ?array $startOf = null;
+
+    /**
+     * @var array|null
+     */
+    private static ?array $endOf = null;
 
     /**
      * @example 1day 2 hours
@@ -64,7 +70,7 @@ final class Xpiry implements XpiryInterface
      */
     public static function startOf($unit, ...$params): Xpiry
     {
-        self::$startOf = self::$startAt->copy()->startOf($unit, ...$params);
+        self::$startOf = ['unit' => $unit, "params" => $params];
 
         return self::$instance;
     }
@@ -86,12 +92,7 @@ final class Xpiry implements XpiryInterface
      */
     public static function endOf($unit, ...$params): Xpiry
     {
-        if (is_null(self::$startOf)) {
-            self::$startOf = self::$startAt->copy()->endOf($unit, ...$params);
-
-            return self::$instance;
-        }
-        self::$startOf = self::$startOf->endOf($unit, ...$params);
+        self::$endOf = ['unit' => $unit, "params" => $params];
 
         return self::$instance;
     }
@@ -101,11 +102,34 @@ final class Xpiry implements XpiryInterface
      */
     public static function expireAt(): Carbon
     {
-        if (is_null(self::$startOf)) {
+        if (is_null(self::$startOf) && is_null(self::$endOf)) {
             return self::$startAt->add(self::$periodicTime);
         }
+        if (!is_null(self::$startOf) && is_null(self::$endOf)) {
+            return self::$startAt
+                ->startOf(self::$startOf['unit'], ...self::$startOf['params'])
+                ->add(self::$periodicTime)
+                ->sub(self::caseUnit(self::$startOf['unit']));
+        }
 
-        return self::$startOf->add(self::$periodicTime);
+        return self::$startAt->add(self::$periodicTime);
+    }
+
+    private static function caseUnit(string $unit)
+    {
+        switch ($unit) {
+            case 'month': case 'week';
+                return '1 day';
+            case 'day':
+                return '1 hour';
+            case 'hour':
+                return '1 minute';
+            case 'minute':
+                return '1 second';
+            default:
+                return '';
+        }
+
     }
 
     public function __toString():string
