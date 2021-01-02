@@ -105,9 +105,10 @@ final class Xpiry implements XpiryInterface
      */
     public static function expireAt(): Carbon
     {
-        if (!is_null(self::$startOf)) {
+        if (! is_null(self::$startOf)) {
             $startAt = self::$startAt
                 ->startOf(self::$startOf['unit'])->toDateTimeString();
+
             return Carbon::parse($startAt, self::$timezone)
                 ->add(self::$periodicTime)
                 ->sub('1 second');
