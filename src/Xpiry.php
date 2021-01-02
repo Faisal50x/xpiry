@@ -14,6 +14,8 @@ final class Xpiry implements XpiryInterface
      */
     private static ?Xpiry $instance = null;
 
+    private static ?string $timezone;
+
     private static Carbon $startAt;
 
     /**
@@ -48,8 +50,10 @@ final class Xpiry implements XpiryInterface
         if (is_null(self::$instance) || ! self::$instance instanceof Xpiry) {
             self::$instance = new self();
         }
-        self::$startAt = Carbon::parse($startAt, $tz);
+
+        self::$timezone = $tz;
         self::$periodicTime = $periodicTime;
+        self::$startAt = Carbon::parse($startAt, $tz);
 
         return self::$instance;
     }
@@ -102,35 +106,17 @@ final class Xpiry implements XpiryInterface
      */
     public static function expireAt(): Carbon
     {
-        if (is_null(self::$startOf) && is_null(self::$endOf)) {
-            return self::$startAt->add(self::$periodicTime);
-        }
-        if (!is_null(self::$startOf) && is_null(self::$endOf)) {
-            return self::$startAt
-                ->startOf(self::$startOf['unit'], ...self::$startOf['params'])
+        if (!is_null(self::$startOf)) {
+            $startAt = self::$startAt
+                ->startOf(self::$startOf['unit'])->toDateTimeString();
+            return Carbon::parse($startAt, self::$timezone)
                 ->add(self::$periodicTime)
-                ->sub(self::caseUnit(self::$startOf['unit']));
+                ->sub('1 second');
         }
 
-        return self::$startAt->add(self::$periodicTime);
+        return self::$startAt->add(self::$periodicTime)->sub('1 second');
     }
 
-    private static function caseUnit(string $unit)
-    {
-        switch ($unit) {
-            case 'month': case 'week';
-                return '1 day';
-            case 'day':
-                return '1 hour';
-            case 'hour':
-                return '1 minute';
-            case 'minute':
-                return '1 second';
-            default:
-                return '';
-        }
-
-    }
 
     public function __toString():string
     {

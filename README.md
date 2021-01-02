@@ -5,7 +5,6 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/faisal50x/xpiry.svg?style=flat-square)](https://packagist.org/packages/faisal50x/xpiry)
 
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
 
 ## Installation
 
@@ -20,9 +19,8 @@ composer require faisal50x/xpiry
 ```php
 use Faisal50x\Xpiry\Xpiry;
 
-echo Xpiry::make('2021-11-14', '1 month')
-  	 ->startOf('month');
-#2021-12-01 00:00:00
+echo Xpiry::make('2021-01-14', '1 month')
+  	 ->startOf('month'); #output 2021-01-31 23:59:59
 ```
 
 ## Testing
