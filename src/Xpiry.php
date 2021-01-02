@@ -110,7 +110,7 @@ final class Xpiry implements XpiryInterface
      */
     public static function expireAt(): Carbon
     {
-        if (!is_null(self::$startOf) && is_null(self::$endOf)) {
+        if (! is_null(self::$startOf) && is_null(self::$endOf)) {
             return self::$startAt
                 ->startOf(self::$startOf['unit'])
                 ->add(self::$periodicTime)
@@ -123,7 +123,7 @@ final class Xpiry implements XpiryInterface
                 ->add(self::$periodicTime);
         }
 
-        if (!is_null(self::$endOf) && !is_null(self::$startOf)) {
+        if (! is_null(self::$endOf) && ! is_null(self::$startOf)) {
             return self::$startAt->startOf(self::$startOf['unit'])
                 ->endOf(self::$endOf['unit'])
                 ->add(self::$periodicTime);
