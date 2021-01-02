@@ -6,6 +6,11 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Faisal50x\Xpiry\Contracts\XpiryInterface;
 
+/**
+ * Class Xpiry
+ * @package Faisal50x\Xpiry
+ */
+
 final class Xpiry implements XpiryInterface
 {
     /**
@@ -105,12 +110,23 @@ final class Xpiry implements XpiryInterface
      */
     public static function expireAt(): Carbon
     {
-        if (!is_null(self::$startOf)) {
-            $startAt = self::$startAt
-                ->startOf(self::$startOf['unit'])->toDateTimeString();
-            return Carbon::parse($startAt, self::$timezone)
+        if (!is_null(self::$startOf) && is_null(self::$endOf)) {
+            return self::$startAt
+                ->startOf(self::$startOf['unit'])
                 ->add(self::$periodicTime)
                 ->sub('1 second');
+        }
+
+        if (!is_null(self::$endOf) && is_null(self::$startOf)){
+            return self::$startAt->startOf(self::$endOf['unit'])
+                ->endOf(self::$endOf['unit'])
+                ->add(self::$periodicTime);
+        }
+
+        if (!is_null(self::$endOf) && !is_null(self::$startOf)) {
+            return self::$startAt->startOf(self::$startOf['unit'])
+                ->endOf(self::$endOf['unit'])
+                ->add(self::$periodicTime);
         }
 
         return self::$startAt->add(self::$periodicTime)->sub('1 second');
