@@ -18,8 +18,10 @@ composer require faisal50x/xpiry
 ## Usage
 
 ```php
-$skeleton = new Faisal50x\Xpiry();
-echo $skeleton->echoPhrase('Hello, Faisal50x!');
+use Faisal50x\Xpiry\Xpiry;
+echo Xpiry::make('2021-11-14', '1 month')
+  	 ->startOf('month');
+#2021-12-01 00:00:00
 ```
 
 ## Testing
