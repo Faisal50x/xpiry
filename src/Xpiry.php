@@ -117,7 +117,7 @@ final class Xpiry implements XpiryInterface
                 ->sub('1 second');
         }
 
-        if (!is_null(self::$endOf) && is_null(self::$startOf)){
+        if (! is_null(self::$endOf) && is_null(self::$startOf)) {
             return self::$startAt
                 ->endOf(self::$endOf['unit'])
                 ->add(self::$periodicTime);
