@@ -9,7 +9,7 @@ use Faisal50x\Xpiry\Contracts\XpiryInterface;
 final class Xpiry implements XpiryInterface
 {
     /**
-     * @var Xpiry|null $instance
+     * @var Xpiry|null
      */
     private static ?Xpiry $instance = null;
 
@@ -23,7 +23,7 @@ final class Xpiry implements XpiryInterface
     /**
      * @example 1day 2 hours
      *
-     * @var string $periodicTime
+     * @var string
      */
     private static string $periodicTime;
 
@@ -39,11 +39,12 @@ final class Xpiry implements XpiryInterface
      */
     public static function make($startAt, string $periodicTime, ?string $tz = null): Xpiry
     {
-        if(is_null(self::$instance) || !self::$instance instanceof Xpiry) {
+        if (is_null(self::$instance) || ! self::$instance instanceof Xpiry) {
             self::$instance = new self();
         }
         self::$startAt = Carbon::parse($startAt, $tz);
         self::$periodicTime = $periodicTime;
+
         return self::$instance;
     }
 
@@ -61,10 +62,10 @@ final class Xpiry implements XpiryInterface
      *
      * @return static
      */
-
     public static function startOf($unit, ...$params): Xpiry
     {
         self::$startOf = self::$startAt->copy()->startOf($unit, ...$params);
+
         return self::$instance;
     }
 
@@ -87,9 +88,11 @@ final class Xpiry implements XpiryInterface
     {
         if (is_null(self::$startOf)) {
             self::$startOf = self::$startAt->copy()->endOf($unit, ...$params);
+
             return self::$instance;
         }
         self::$startOf = self::$startOf->endOf($unit, ...$params);
+
         return self::$instance;
     }
 
@@ -98,9 +101,10 @@ final class Xpiry implements XpiryInterface
      */
     public static function expireAt(): Carbon
     {
-        if(is_null(self::$startOf)) {
+        if (is_null(self::$startOf)) {
             return self::$startAt->add(self::$periodicTime);
         }
+
         return self::$startOf->add(self::$periodicTime);
     }
 
@@ -108,6 +112,4 @@ final class Xpiry implements XpiryInterface
     {
         return self::expireAt()->toDateTimeString();
     }
-
-
 }
