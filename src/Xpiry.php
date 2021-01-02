@@ -5,7 +5,6 @@ namespace Faisal50x\Xpiry;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Faisal50x\Xpiry\Contracts\XpiryInterface;
-use phpDocumentor\Reflection\Types\Self_;
 
 final class Xpiry implements XpiryInterface
 {
@@ -116,7 +115,6 @@ final class Xpiry implements XpiryInterface
 
         return self::$startAt->add(self::$periodicTime)->sub('1 second');
     }
-
 
     public function __toString():string
     {
