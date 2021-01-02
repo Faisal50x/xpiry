@@ -1,6 +1,6 @@
 {
     "name": "faisal50x/xpiry",
-    "description": "A simple tool can make your expire validation esier and faster",
+    "description": "A simple tool can make your expire validation easier and faster",
     "keywords": [
         "faisal50x",
         "xpiry"
@@ -11,17 +11,18 @@
         {
             "name": "Faisal Ahmed",
             "email": "foysal20x@gmail.com",
-            "homepage": "https://spatie.be",
+            "homepage": "https://github.com/faisal50x",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "nesbot/carbon": "^2.43"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.3"
     },
     "autoload": {
         "psr-4": {
