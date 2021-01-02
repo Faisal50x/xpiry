@@ -19,6 +19,7 @@ composer require faisal50x/xpiry
 
 ```php
 use Faisal50x\Xpiry\Xpiry;
+
 echo Xpiry::make('2021-11-14', '1 month')
   	 ->startOf('month');
 #2021-12-01 00:00:00
