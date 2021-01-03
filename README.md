@@ -20,7 +20,13 @@ composer require faisal50x/xpiry
 use Faisal50x\Xpiry\Xpiry;
 
 echo Xpiry::make('2021-01-14', '1 month')
-  	 ->startOf('month'); #output 2021-01-31 23:59:59
+  	 ->startOf(Xpiry::MONTH); #output 2021-01-31 23:59:59
+
+echo Xpiry::make('2021-01-10', '1 month')
+            ->endOf(Xpiry::MONTH); #2021-03-03 23:59:59
+
+echo Xpiry::make('2021-01-14', '2 days')
+            ->startOf(Xpiry::WEEK); #2021-01-12 23:59:59
 ```
 
 ## Testing
