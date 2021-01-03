@@ -24,5 +24,5 @@ interface XpiryInterface
     public const DAY = 'day';
     public const WEEK = 'week';
     public const MONTH = 'month';
-    public const YEAR  = 'year';
+    public const YEAR = 'year';
 }
