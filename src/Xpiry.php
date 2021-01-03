@@ -18,8 +18,14 @@ final class Xpiry implements XpiryInterface
      */
     private static ?Xpiry $instance = null;
 
+    /**
+     * @var string|null $timezone
+     */
     private static ?string $timezone;
 
+    /**
+     * @var Carbon $startAt
+     */
     private static Carbon $startAt;
 
     /**
