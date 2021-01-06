@@ -2,6 +2,7 @@
 
 namespace Faisal50x\Xpiry\Tests;
 
+use Carbon\Carbon;
 use Faisal50x\Xpiry\Xpiry;
 use PHPUnit\Framework\TestCase;
 
@@ -37,11 +38,12 @@ class XpiryTest extends TestCase
         $this->assertEquals('2021-03-03 23:59:59', $xpiry->expireAt()->toDateTimeString());
     }
 
-    /** @test */
+
     public function add_two_days_start_of_week()
     {
-        $xpiry = Xpiry::make('2021-01-14', '2 days')
+
+        $xpiry = Xpiry::make('2021-01-07', '2 days')
             ->startOf(Xpiry::WEEK);
-        $this->assertEquals('2021-01-12 23:59:59', $xpiry->expireAt()->toDateTimeString());
+        $this->assertEquals('2021-01-04 23:59:59', $xpiry->expireAt()->toDateTimeString());
     }
 }

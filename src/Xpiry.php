@@ -43,7 +43,7 @@ final class Xpiry implements XpiryInterface
      *
      * @var string
      */
-    private static string $periodicTime;
+    private static string $validFor;
 
     private function __construct()
     {
@@ -51,19 +51,19 @@ final class Xpiry implements XpiryInterface
 
     /**
      * @param DateTimeInterface|string $startAt
-     * @param string $periodicTime
+     * @param string $validFor
      * @param string|null $tz
      * @return Xpiry
      */
-    public static function make($startAt, string $periodicTime, ?string $tz = null): Xpiry
+    public static function make($startAt, string $validFor, ?string $tz = null): Xpiry
     {
         if (is_null(self::$instance) || ! self::$instance instanceof Xpiry) {
             self::$instance = new self();
         }
 
         self::$timezone = $tz;
-        self::$periodicTime = $periodicTime;
-        self::$startAt = Carbon::parse($startAt, $tz);
+        self::$validFor = $validFor;
+        self::$startAt = Carbon::parse($startAt, $tz)->locale('en_US');
 
         return self::$instance;
     }
@@ -111,6 +111,12 @@ final class Xpiry implements XpiryInterface
         return self::$instance;
     }
 
+    public static function startOfWeek($day): ?Xpiry
+    {
+        self::$startAt = self::$startAt->locale('en_US');
+        return self::$instance;
+    }
+
     /**
      * @return Carbon
      */
@@ -119,23 +125,23 @@ final class Xpiry implements XpiryInterface
         if (! is_null(self::$startOf) && is_null(self::$endOf)) {
             return self::$startAt
                 ->startOf(self::$startOf['unit'])
-                ->add(self::$periodicTime)
+                ->add(self::$validFor)
                 ->sub('1 second');
         }
 
         if (! is_null(self::$endOf) && is_null(self::$startOf)) {
             return self::$startAt
                 ->endOf(self::$endOf['unit'])
-                ->add(self::$periodicTime);
+                ->add(self::$validFor);
         }
 
         if (! is_null(self::$endOf) && ! is_null(self::$startOf)) {
             return self::$startAt->startOf(self::$startOf['unit'])
                 ->endOf(self::$endOf['unit'])
-                ->add(self::$periodicTime);
+                ->add(self::$validFor);
         }
 
-        return self::$startAt->add(self::$periodicTime)->sub('1 second');
+        return self::$startAt->add(self::$validFor)->sub('1 second');
     }
 
     public function __toString():string
