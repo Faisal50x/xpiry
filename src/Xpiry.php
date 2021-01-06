@@ -114,6 +114,7 @@ final class Xpiry implements XpiryInterface
     public static function startOfWeek($day): ?Xpiry
     {
         self::$startAt = self::$startAt->locale('en_US');
+
         return self::$instance;
     }
 
